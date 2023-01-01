@@ -5,26 +5,26 @@ This repository provides supplementary code for benchmarking BP estimation algor
 ============================
 
 ## File Structure
-.
-├── ...
-├── datasets                   # (need to create outside of cloned/forked repository) contains datasets
-├── wearablebp_benchmarks      # repository to clone/fork
-│   └── models                 # contins best deep learning models
-│   └── results                # contains results from both classical ML and deep learning algorithms
-│       └── features           # contains features extracted from classical ML algorithms
-│       └── training           # contains data from classical ML algorithm training in .pkl files
-│   └── runs                   # contains all saved model checkpoints from deep learning algorithms
-│   └── third_party            # contains benchmarked code from various
-│   └── classical_ml           # contains code for classical ML feature extraction
-│       └── train_feats.ipynb  # code for training classical ML algorithms on extracted features
-│   └── deep_learning          # contains building blocks for training deep learning algorithms
-│       └── train_dl.ipynb     # code for training deep learning algorithms using PyTorch
-│       └── dl_dataloaders.py  # contains dataloaders written using `torch.utils.data.DataLoader`
-│       └── dl_models.py       # contains deep learning models from [Jeong et al., (2021)](https://www.nature.com/articles/s41598-021-92997-0) and [Huang et al., (2022)](https://www.sciencedirect.com/science/article/abs/pii/S1746809421010016)
-│       └── utils.py           # contains misc utils for deep learning training
-│   └── ED_computations.ipynb  # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards. See our [meta page](https://wearablebp.github.io/meta) and [our paper]() for more information.
-│   └── datasets_to_h5.ipynb   # example code to convert datasets from their native filetype to .h5 
-│   └── make_plots.ipynb       # code to make Error vs Ground Truth, Correlation, and Bland-Altman plots
+    .
+    ├── ...
+    ├── datasets                   # (need to create outside of cloned/forked repository) contains datasets
+    ├── wearablebp_benchmarks      # repository to clone/fork
+    │   └── models                 # contins best deep learning models
+    │   └── results                # contains results from both classical ML and deep learning algorithms
+    │       └── features           # contains features extracted from classical ML algorithms
+    │       └── training           # contains data from classical ML algorithm training in .pkl files
+    │   └── runs                   # contains all saved model checkpoints from deep learning algorithms
+    │   └── third_party            # contains benchmarked code from various
+    │   └── classical_ml           # contains code for classical ML feature extraction
+    │       └── train_feats.ipynb  # code for training classical ML algorithms on extracted features
+    │   └── deep_learning          # contains building blocks for training deep learning algorithms
+    │       └── train_dl.ipynb     # code for training deep learning algorithms using PyTorch
+    │       └── dl_dataloaders.py  # contains dataloaders written using `torch.utils.data.DataLoader`
+    │       └── dl_models.py       # contains deep learning models from [Jeong et al., (2021)](https://www.nature.com/articles/s41598-021-92997-0) and [Huang et al., (2022)](https://www.sciencedirect.com/science/article/abs/pii/S1746809421010016)
+    │       └── utils.py           # contains misc utils for deep learning training
+    │   └── ED_computations.ipynb  # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards. See our [meta page](https://wearablebp.github.io/meta) and [our paper]() for more information.
+    │   └── datasets_to_h5.ipynb   # example code to convert datasets from their native filetype to .h5 
+    │   └── make_plots.ipynb       # code to make Error vs Ground Truth, Correlation, and Bland-Altman plots
 
 ## How to use
 
