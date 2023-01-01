@@ -53,3 +53,6 @@ algorithm_name: algorithm used for feature extraction (classical ML) or training
 
 ## Dependencies
 
+> PyTorch v1.7.1
+
+A docker with all the dependencies can be found `mycheung/wearablebp:latest` or on dockerhub [here](https://hub.docker.com/repository/docker/mycheung/wearablebp/general). 
