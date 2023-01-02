@@ -6,24 +6,26 @@ This repository provides supplementary code from our [review paper]() on Wearabl
 
 ## File Structure
     ..
-    ├── datasets                   # (need to create outside of cloned/forked repository) contains datasets
-    ├── wearablebp_benchmarks      # repository to clone/fork
-    │   └── models                 # contins best deep learning models
-    │   └── results                # contains results from both classical ML and deep learning algorithms
-    │       └── features           # contains features extracted from classical ML algorithms
-    │       └── training           # contains data from classical ML algorithm training in .pkl files
-    │   └── runs                   # contains all saved model checkpoints from deep learning algorithms
-    │   └── third_party            # contains benchmarked code from various
-    │   └── classical_ml           # contains code for classical ML feature extraction
-    │       └── train_feats.ipynb  # code for training classical ML algorithms on extracted features
-    │   └── deep_learning          # contains building blocks for training deep learning algorithms
-    │       └── train_dl.ipynb     # code for training deep learning algorithms using PyTorch
-    │       └── dl_dataloaders.py  # contains dataloaders written using `torch.utils.data.DataLoader`
-    │       └── dl_models.py       # contains deep learning models from [Jeong et al., (2021)](https://www.nature.com/articles/s41598-021-92997-0) and [Huang et al., (2022)](https://www.sciencedirect.com/science/article/abs/pii/S1746809421010016)
-    │       └── utils.py           # contains misc utils for deep learning training
-    │   └── ED_computations.ipynb  # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards
-    │   └── datasets_to_h5.ipynb   # example code to convert datasets from their native filetype to .h5 
-    │   └── make_plots.ipynb       # code to make Error vs Ground Truth, Correlation, and Bland-Altman plots
+    ├── datasets                          # (need to create outside of cloned/forked repository) contains datasets
+    ├── wearablebp_benchmarks             # repository to clone/fork
+    │   └── models                        # contins best deep learning models
+    │   └── results                       # contains results from both classical ML and deep learning algorithms
+    │       └── features                  # contains features extracted from classical ML algorithms
+    │       └── training                  # contains data from classical ML algorithm training in .pkl files
+    │   └── runs                          # contains all saved model checkpoints from deep learning algorithms
+    │   └── third_party                   # contains benchmarked code from various
+    │   └── classical_ml                  # contains code for classical ML feature extraction
+    │       └── train_feats.ipynb         # code for training classical ML algorithms on extracted features
+    │   └── deep_learning                 # contains building blocks for training deep learning algorithms
+    │       └── train_dl.ipynb            # code for training deep learning algorithms using PyTorch
+    │       └── dl_dataloaders.py         # contains dataloaders written using `torch.utils.data.DataLoader`
+    │       └── dl_models.py              # contains deep learning models from Jeong et al., (2021) and Huang et al., (2022)
+    │       └── utils.py                  # contains misc utils for deep learning training
+    │   └── tools
+    │       └── ED_computations.ipynb     # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards
+    │       └── datasets_to_h5.ipynb      # example code to convert datasets from their native filetype to .h5 
+    │       └── make_plots.ipynb          # code to make Error vs Ground Truth, Correlation, and Bland-Altman plots
+    │       └── viz.py                    # script to create Bland-Altman, Correlation, and Error-Reference plots
 
 ## How to use
 
@@ -76,31 +78,32 @@ algorithm_name: algorithm used for feature extraction (classical ML) or training
 Results from classical ML and deep learning models are saved in the .pickle format `wearablebp_benchmarks/results/training/`, consisting of a dictionary with all the raw estimates, ground truths, errors, and distribution data. This results dictionary structure and the data visualization scripts in `wearablebp_benchmarks/make_plots.ipynb` support multiple machine learning models.
 
     dict{
-            │   └── <sbp_model_name_1>      # model/estimator name used for SBP estimation (string)
-            │       └── sbp                 # systolic blood pressure (SBP) sub-dict
-            │           └── raw ests        # array of estimates from model for SBP
-            │           └── raw gts         # array of ground truth values for SBP
-            │           └── bias            # bias of model for SBP (scalar)
-            │           └── err std         # standard deviation of error for SBP (scalar)
-            │           └── dist std        # standard deviation of SBP distribution (scalar)
-            │   └── <dbp_model_name_1>      # model/estimator name used for DBP estimation (string)
-            │       └── dbp                 # systolic blood pressure (SBP) sub-dict
-            │           └── raw ests        # array of estimates from model for DBP
-            │           └── raw gts         # array of ground truth values for DBP
-            │           └── bias            # bias of model for DBP (scalar)
-            │           └── err std         # standard deviation of error for DBP (scalar)
-            │           └── dist std        # standard deviation of DBP distribution (scalar)
-            ...
-            │   └── <sbp_model_name_n>
-            │       └── sbp
-            │           └── ...
-            │       └── dbp
-            │           └── ...
-            │   └── <dbp_model_name_n>
-            │       └── sbp
-            │           └── ...
-            │       └── dbp
-            │           └── ...
+            │   └── sbp                         # systolic blood pressure (SBP) sub-dict
+            │       └── <sbp_model_name_1>      # model/estimator name used for SBP estimation (string)
+            │           └── raw ests            # array of estimates from model for SBP
+            │           └── raw gts             # array of ground truth values for SBP
+            │           └── bias                # bias of model for SBP (scalar)
+            │           └── err std             # standard deviation of error for SBP (scalar)
+            │           └── dist std            # standard deviation of SBP distribution (scalar)
+            │   └── dbp                         # systolic blood pressure (SBP) sub-dict
+            │       └── <dbp_model_name_1>      # model/estimator name used for DBP estimation (string)
+            │           └── raw ests            # array of estimates from model for DBP
+            │           └── raw gts             # array of ground truth values for DBP
+            │           └── bias                # bias of model for DBP (scalar)
+            │           └── err std             # standard deviation of error for DBP (scalar)
+            │           └── dist std            # standard deviation of DBP distribution (scalar)
+                ...
+            │       └── <sbp_model_name_n>
+            │           └── sbp
+            │               └── ...
+            │           └── dbp
+            │               └── ...
+            │       └── <dbp_model_name_n>
+            │           └── sbp
+            │               └── ...
+            │           └── dbp
+            │               └── ...
+            │   └── opt                         # options class (the configurations) used when building model
     }
     
 The data visualization script supports different types of plots, including Error-Reference, Bland-Altman, and Correlation Plots. An example of a visual is shown below.
