@@ -46,20 +46,40 @@ This repository provides supplementary code for benchmarking BP estimation algor
 
 Result files are named in the form `<dataset name>_<filter name>_<algorithm name>`
 
+```
 dataset_name: original dataset used (i.e. MIMIC, PPG-BP, VitalDB)
 filter_name: pre-processing algorithm name to create subset of dataset
 algorithm_name: algorithm used for feature extraction (classical ML) or training (deep learning)
+```
+
+#### Results .pickle file structure
+
+Results from classical ML and deep learning models are saved in the .pickle format `wearablebp_benchmarks/results/training/`, consisting of a dictionary with all the raw estimates, ground truths, errors, and distribution data.
+
+    dict{
+    ├── wearablebp_benchmarks
+    │   └── sbp                 # systolic blood pressure (SBP) sub-dict
+    │       └── raw ests        # array of estimates from model for SBP
+    │       └── raw gts         # array of ground truth values for SBP
+    │       └── bias            # bias of model for SBP (scalar)
+    │       └── err std         # standard deviation of error for SBP (scalar)
+    │       └── dist std        # standard deviation of BP distribution for SBP (scalar)
+    │   └── dbp                 # diastolic blood pressure (DBP) sub-dict
+    │       └── raw ests        # array of estimates from model for DBP
+    │       └── raw gts         # array of ground truth values for DBP
+    │       └── bias            # bias of model for DBP (scalar)
+    │       └── err std         # standard deviation of error for DBP (scalar)
+    │       └── dist std        # standard deviation of BP distribution for DBP (scalar)
+    }
 
 ## Dependencies
 
-> h5py==2.10.0
-
-> numpy==1.19.2
-
-> pyampd==0.0.1
-
-> scipy==1.6.2
-
-> torch==1.7.1
+```
+h5py==2.10.0
+numpy==1.19.2
+pyampd==0.0.1
+scipy==1.6.2
+torch==1.7.1
+```
 
 A docker with all the dependencies can be found `mycheung/wearablebp:latest` or on dockerhub [here](https://hub.docker.com/repository/docker/mycheung/wearablebp/general). 
