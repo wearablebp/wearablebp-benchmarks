@@ -1,6 +1,6 @@
 # Welcome to Wearable BP Benchmarks!
 
-This repository provides supplementary code for benchmarking BP estimation algorithms in an effort to provide a convenient machine learning pipeline for BP estimation, reduce heterogeneity in literature, and support community benchmarking on publicly available datasets. Currently, this repository only supports subject split as the calibration technique as there is no study that has sufficient power to detect the required effect size based on the AAMI/ANSI/ISO Standards. See our [Wearable BP Meta](https://wearablebp.github.io/meta) and [Wearable BP Benchmarks](https://wearablebp.github.io/benchmarks) pages for more information. Finally, please check out our [review paper]() on Wearable BP! Our review paper discusses Sensors and Systems, Pre-processing and Feature Extraction, and Algorithms. Then, we adopt a metric called Explained Deviation to account for dataset heterogeneity and to determine which systems show potential.
+This repository provides supplementary code from our [review paper]() on Wearable BP for benchmarking BP estimation algorithms in an effort to provide a convenient machine learning pipeline for BP estimation, reduce heterogeneity in literature, and support community benchmarking on publicly available datasets.  Our review paper discusses Sensors and Systems, Pre-processing and Feature Extraction, and Algorithms. We adopt a metric called Explained Deviation (used here) to account for dataset heterogeneity and meta-analyze systems that show potential. Currently, this repository only contains examples of subject split as the calibration technique as there is no study that has sufficient power to detect the required effect size based on the AAMI/ANSI/ISO Standards. However, the workflow for personalization is the same. The only difference is that the initialized BP value is subtracted from all the BP values when creating the dataset (see below for pseudocode). Finally, check out our [website](https://wearablebp.github.io) for a Wearable BP paper search, meta-analysis, datasets, benchmarks, a list of third-party code, and a comparison between BP device standards.
 
 ============================
 
@@ -42,6 +42,25 @@ This repository provides supplementary code for benchmarking BP estimation algor
 4. Use `wearablebp_benchmarks/deep_learning/train_dl.ipynb` to train model (specify options class variables). Model is saved in .pkl file using the same name in 3. Result and model files follow the naming conventions below.
 5. Use `wearablebp_benchmarks/make_plots.ipynb` to visualize data and compute Explained Deviation metrics
 
+#### Personalization workflow
+
+1. Determine initialization method. Example: use the first BP measurement as initial value
+2. Remove initialization data from dataset
+3. Subtract initialization value from all other BP measurements
+4. Convert dataset into .h5 file. See `wearablebp_benchmarks/datasets_to_h5.ipynb`
+5. Do BP estimation using classical ML or deep learning workflow
+
+Pseudocode for 1-3:
+```
+sbp0 = sbp[0]                     # use first SBP value as SBP initialization
+dbp0 = dbp[0]                     # use first DBP value as DBP initialization
+sbp_new = sbp[1:]                 # remove SBP initialization point
+dbp_new = dbp[1:]                 # remove DBP initialization point
+sbp_new = sbp_new - sbp0          # set new ground truth as change in SBP
+dbp_new = dbp_new - dbp0          # set new ground truth as change in DBP
+sensor_data = sensor_data[1:]     # remove sensor data used at initialization point
+```
+
 #### Results Naming Conventions
 
 Result files are named in the form `<dataset name>_<filter name>_<algorithm name>`
@@ -54,22 +73,34 @@ algorithm_name: algorithm used for feature extraction (classical ML) or training
 
 #### Results .pickle file structure
 
-Results from classical ML and deep learning models are saved in the .pickle format `wearablebp_benchmarks/results/training/`, consisting of a dictionary with all the raw estimates, ground truths, errors, and distribution data.
+Results from classical ML and deep learning models are saved in the .pickle format `wearablebp_benchmarks/results/training/`, consisting of a dictionary with all the raw estimates, ground truths, errors, and distribution data. This results dictionary structure and the data visualization scripts in `wearablebp_benchmarks/make_plots.ipynb` support multiple machine learning models.
 
     dict{
-    ├── wearablebp_benchmarks
-    │   └── sbp                 # systolic blood pressure (SBP) sub-dict
-    │       └── raw ests        # array of estimates from model for SBP
-    │       └── raw gts         # array of ground truth values for SBP
-    │       └── bias            # bias of model for SBP (scalar)
-    │       └── err std         # standard deviation of error for SBP (scalar)
-    │       └── dist std        # standard deviation of BP distribution for SBP (scalar)
-    │   └── dbp                 # diastolic blood pressure (DBP) sub-dict
-    │       └── raw ests        # array of estimates from model for DBP
-    │       └── raw gts         # array of ground truth values for DBP
-    │       └── bias            # bias of model for DBP (scalar)
-    │       └── err std         # standard deviation of error for DBP (scalar)
-    │       └── dist std        # standard deviation of BP distribution for DBP (scalar)
+            │   └── <sbp_model_name_1>      # model/estimator name used for SBP estimation (string)
+            │       └── sbp                 # systolic blood pressure (SBP) sub-dict
+            │           └── raw ests        # array of estimates from model for SBP
+            │           └── raw gts         # array of ground truth values for SBP
+            │           └── bias            # bias of model for SBP (scalar)
+            │           └── err std         # standard deviation of error for SBP (scalar)
+            │           └── dist std        # standard deviation of SBP distribution (scalar)
+            │   └── <dbp_model_name_1>      # model/estimator name used for DBP estimation (string)
+            │       └── dbp                 # systolic blood pressure (SBP) sub-dict
+            │           └── raw ests        # array of estimates from model for DBP
+            │           └── raw gts         # array of ground truth values for DBP
+            │           └── bias            # bias of model for DBP (scalar)
+            │           └── err std         # standard deviation of error for DBP (scalar)
+            │           └── dist std        # standard deviation of DBP distribution (scalar)
+            ...
+            │   └── <sbp_model_name_n>
+            │       └── sbp
+            │           └── ...
+            │       └── dbp
+            │           └── ...
+            │   └── <dbp_model_name_n>
+            │       └── sbp
+            │           └── ...
+            │       └── dbp
+            │           └── ...
     }
 
 ## Dependencies
