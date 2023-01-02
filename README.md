@@ -21,7 +21,7 @@ This repository provides supplementary code from our [review paper]() on Wearabl
     │       └── dl_dataloaders.py  # contains dataloaders written using `torch.utils.data.DataLoader`
     │       └── dl_models.py       # contains deep learning models from [Jeong et al., (2021)](https://www.nature.com/articles/s41598-021-92997-0) and [Huang et al., (2022)](https://www.sciencedirect.com/science/article/abs/pii/S1746809421010016)
     │       └── utils.py           # contains misc utils for deep learning training
-    │   └── ED_computations.ipynb  # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards. See our [meta page](https://wearablebp.github.io/meta) and [our paper]() for more information.
+    │   └── ED_computations.ipynb  # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards
     │   └── datasets_to_h5.ipynb   # example code to convert datasets from their native filetype to .h5 
     │   └── make_plots.ipynb       # code to make Error vs Ground Truth, Correlation, and Bland-Altman plots
 
@@ -71,7 +71,7 @@ filter_name: pre-processing algorithm name to create subset of dataset
 algorithm_name: algorithm used for feature extraction (classical ML) or training (deep learning)
 ```
 
-#### Results .pickle file structure
+#### Results and Visualization
 
 Results from classical ML and deep learning models are saved in the .pickle format `wearablebp_benchmarks/results/training/`, consisting of a dictionary with all the raw estimates, ground truths, errors, and distribution data. This results dictionary structure and the data visualization scripts in `wearablebp_benchmarks/make_plots.ipynb` support multiple machine learning models.
 
@@ -102,6 +102,10 @@ Results from classical ML and deep learning models are saved in the .pickle form
             │       └── dbp
             │           └── ...
     }
+    
+The data visualization script supports different types of plots, including Error-Reference, Bland-Altman, and Correlation Plots. An example of a visual is shown below.
+
+![image](./example_plot.png)
 
 ## Dependencies
 
