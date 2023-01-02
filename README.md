@@ -53,9 +53,13 @@ algorithm_name: algorithm used for feature extraction (classical ML) or training
 ## Dependencies
 
 > h5py==2.10.0
+
 > numpy==1.19.2
+
 > pyampd==0.0.1
+
 > scipy==1.6.2
+
 > torch==1.7.1
 
 A docker with all the dependencies can be found `mycheung/wearablebp:latest` or on dockerhub [here](https://hub.docker.com/repository/docker/mycheung/wearablebp/general). 
