@@ -21,7 +21,7 @@ This repository provides supplementary code from our [review paper]() on Wearabl
     │       └── dl_dataloaders.py         # contains dataloaders written using `torch.utils.data.DataLoader`
     │       └── dl_models.py              # contains deep learning models from Jeong et al., (2021) and Huang et al., (2022)
     │       └── utils.py                  # contains misc utils for deep learning training
-    │   └── tools
+    │   └── tools                         # misc tools
     │       └── ED_computations.ipynb     # code to reproduce explained deviation requirements from AAMI/ANSI/ISO standards
     │       └── datasets_to_h5.ipynb      # example code to convert datasets from their native filetype to .h5 
     │       └── make_plots.ipynb          # code to make Error vs Ground Truth, Correlation, and Bland-Altman plots
